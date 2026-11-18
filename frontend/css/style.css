@@ -1,24 +1,73 @@
-*{
-    background-color: grey;
-    color: white;
-    font-size: 1rem;
-}
-header{
-    font-size: 2rem;
-    color: black;
-    font-weight: bold;
-}
-button{
-    width: 12vw;
-    font-size: 1rem;
-    margin-bottom: 5px;
-    margin-top: 5px;
+header {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 10px;
 }
 
-.jsde_status{
-    color: black;
-}
-::placeholder{
-    color: white;
+#js_filtro {
+  display: none
 }
 
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-right: 30px;
+  margin-left: 30px;
+  border: 1px solid #0b5ed7;
+  padding: 10px;
+  background-color: grey;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+  background-color: #084298;
+}
+
+main {
+  background: #fff;
+  border: 1px solid #0a06fc;
+  border-radius: 6px;
+  padding: 20px;
+  width: 97vw;
+}
+
+#relatorio {
+  text-align: center;
+}
+
+.input {
+  width: 100%;
+  max-width: 320px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.botao {
+  background-color: grey;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 5px 0;
+  width: 13vw;
+}
+
+.botao:hover {
+  background-color: #084298;
+}
+
+.botao:focus {
+  background-color: rgb(243, 136, 136);
+  color: black;
+  font-weight: bolder;
+}
+
+::placeholder {
+  color: #777;
+}

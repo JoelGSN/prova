@@ -16,19 +16,20 @@ const cadastro = JSON.parse(localStorage.getItem("cadastro")) || []
 
 
 function salvarcad() {
-    if (!nomec.value.trim() && !cpfc.value.trim() && !datac.value.trim() && !salarioc.value.trim() && !funcaoc.value.trim()) {
+    if (!nomec.value.trim() || !cpfc.value.trim() || !datac.value.trim() || !salarioc.value.trim() || !funcaoc.value.trim()) {
         alert("Existem Campos Vazios!")
         return;
     }
-    if (!/^[A-Za-zÁ-ý\s]+$/.test(nomec.value)) {
-        alert("Campos de Nome e Função Não podem Conter Números")
-        return
+    if (/\d/.test(nomec.value)) {
+        alert("O nome não pode conter números.");
+        return;
     }
-    if (!/^\d{11}$/.test(cpfc.value)) {
+
+    if (!/^\d{11}$/.test(cpfc.value.trim())) {
         alert("CPF Precisa Ter 11 Dígitos!!!")
         return
     }
-    if (salarioc.value < 0) {
+    if (Number(salarioc.value) < 0) {
         alert("Salário não pode ser menor do que 0")
         return
     }
@@ -36,7 +37,7 @@ function salvarcad() {
 
     let existe = false
     for (let funcionario of cadastro) {
-        if (funcionario.cpf === cpfc.value) {
+        if (funcionario.cpf === cpfc.value.trim()) {
             existe = true
 
         }
@@ -49,18 +50,17 @@ function salvarcad() {
 
 
     const dadoscad = {
-        nome: nomec.value,
-        cpf: cpfc.value,
+        nome: nomec.value.trim(),
+        cpf: cpfc.value.trim(),
         nascimento: datac.value,
-        salario: salarioc.value,
-        funcao: funcaoc.value,
-        status: "ATIVO"
+        salario: Number(salarioc.value),
+        funcao: funcaoc.value.trim(),
+        status: "Ativo"
     }
 
-    // console.log(dadoscad.nomec)
     cadastro.push(dadoscad)
     localStorage.setItem("cadastro", JSON.stringify(cadastro))
-    alert("Cadastro ok")
+    alert("Cadastro realizado com sucesso!")
 }
 
 
@@ -75,8 +75,8 @@ const nomee = document.getElementById("jsed_nomee")
 const salarioe = document.getElementById("jsed_salarioe")
 
 
-async function buscar_cad() {
-    const cad = cadastro.find(item => item.cpf == cpfe.value);
+function buscar_cad() {
+    const cad = cadastro.find(item => item.cpf == cpfe.value.trim());
     if (cad) {
         nomee.value = cad.nome;
     } else {
@@ -89,11 +89,27 @@ async function buscar_cad() {
 
 
 function edit_sal() {
-    const cad = cadastro.find(item => item.cpf == cpfe.value);
+    const cad = cadastro.find(item => item.cpf == cpfe.value.trim());
+
+    if (!cad) {
+        alert("Funcionário não encontrado!");
+        return;
+    }
+
 
     if (cad) {
         const nsal = Number(salarioe.value);
-        if (nsal < Number(cad.salario) && cad.status == "ATIVO") {
+        if (salarioe.value.trim() === "") {
+        alert("Informe um salário válido.");
+        return;
+    }
+        if (nsal < Number(cad.salario)) {
+        alert("O novo salário não pode ser inferior ao salário atual.");
+        return;
+    }
+
+
+        if (nsal < Number(cad.salario)) {
             alert("erro sal");
             return;
         }
@@ -116,8 +132,8 @@ const cpfd = document.getElementById("jsde_cpf")
 const nomed = document.getElementById("jsde_nomed")
 
 
-async function buscar_deslig() {
-    const cad = cadastro.find(item => item.cpf == cpfd.value);
+function buscar_deslig() {
+    const cad = cadastro.find(item => item.cpf == cpfd.value.trim());
     if (cad) {
         nomed.value = cad.nome;
     } else {
@@ -130,20 +146,25 @@ async function buscar_deslig() {
 
 
 function edit_status() {
-    const cad = cadastro.find(item => item.cpf == cpfd.value);
+    const cad = cadastro.find(item => item.cpf == cpfd.value.trim());
 
-    if (cad) {
-        const nstatus = "DESLIGADO";
-        if (!nstatus) {
-            alert("erro ");
-            return;
-        }
-        cad.status = nstatus;
+        if (!cad) {
+        alert("Funcionário não encontrado!");
+        return;
+    }
+    if (cad.status !== "Ativo") {
+        alert("Precisa ser Ativo para Desligar.");
+        return;
+    }
+
+
+
+        cad.status = "Demitido";
 
         localStorage.setItem("cadastro", JSON.stringify(cadastro))
         alert(`O Funcionário ${nomed.value} foi ${cad.status} com sucesso!!!`);
 
-    }
+    
 
 
 
@@ -168,7 +189,7 @@ function cada() {
 }
 function cadi() {
     campo.value = "cadi";
-    nomeRelatorio = "De Inativos";
+    nomeRelatorio = "De Demitidos";
     relatorio();
 }
 
@@ -184,8 +205,8 @@ function relatorio() {
 
 
             for (let funcionario of cadastro) {
-                if (funcionario.status === "DESLIGADO") {
-                    dadosrl.innerHTML += `<p>${i++}º <span style="color: red;"> => <span style="color: black;"> ${funcionario.nome} | Função: ${funcionario.funcao} | Salário: R$ ${funcionario.salario} | Status: ${funcionario.status} <span style="color: red;"> <= <span style="color: black;"> </p>`;
+                if (funcionario.status === "Demitido") {
+                    dadosrl.innerHTML += `<p>${i++}º <span style="color: red;"> => <span style="color: black;"> Nome do Funcionário: ${funcionario.nome} || CPF: ${funcionario.cpf} || Função: ${funcionario.funcao} || Salário: R$ ${funcionario.salario} || Status: ${funcionario.status} <span style="color: red;"> <= <span style="color: black;"> </p>`;
                 }
             }
         }
@@ -197,8 +218,8 @@ function relatorio() {
                 // dadosrl.innerHTML = 'Relatório de Cadastro de Produtos'
                 dadosrl.innerHTML = `<span style="color: red; font-size: 1.8rem;"> => <span style="color: black;">Relatório ${nomeRelatorio}<span style="color: red;"> <= <span style="color: black;">`;
                 for (let funcionario of cadastro) {
-                    if (funcionario.status === "ATIVO") {
-                        dadosrl.innerHTML += `<p>${i++}º <span style="color: red;"> => <span style="color: black;"> ${funcionario.nome} | Função: ${funcionario.funcao} | Salário: R$ ${funcionario.salario} | Status: ${funcionario.status} <span style="color: red;"> <= <span style="color: black;"> </p>`;
+                    if (funcionario.status === "Ativo") {
+                        dadosrl.innerHTML += `<p>${i++}º <span style="color: red;"> => <span style="color: black;"> Nome do Funcionário: ${funcionario.nome} || CPF: ${funcionario.cpf} || Função: ${funcionario.funcao} || Salário: R$ ${funcionario.salario} || Status: ${funcionario.status} <span style="color: red;"> <= <span style="color: black;"> </p>`;
                     }
                 }
 
@@ -215,3 +236,34 @@ function relatorio() {
 //===========================================relatorios fim===========================================//
 
 
+function mostrarRelatorio() {
+    const listaAtivos = document.getElementById("listaAtivos");
+    const listaDemitidos = document.getElementById("listaDemitidos");
+
+    if (!listaAtivos || !listaDemitidos) {
+        return;
+    }
+
+    listaAtivos.innerHTML = "";
+    listaDemitidos.innerHTML = "";
+
+    let iAtivo = 1;
+    let iDemitido = 1;
+
+    for (let funcionario of cadastro) {
+        if (funcionario.status === "Ativo") {
+            listaAtivos.innerHTML += `<p>${iAtivo++} - ${funcionario.nome} | CPF: ${funcionario.cpf} | Função: ${funcionario.funcao} | Salário: R$ ${funcionario.salario}</p>`;
+        } else if (funcionario.status === "Demitido") {
+            listaDemitidos.innerHTML += `<p>${iDemitido++} - ${funcionario.nome} | CPF: ${funcionario.cpf} | Função: ${funcionario.funcao} | Salário: R$ ${funcionario.salario}</p>`;
+        }
+    }
+
+    if (listaAtivos.innerHTML === "") {
+        listaAtivos.innerHTML = "<p>Nenhum funcionário ativo.</p>";
+    }
+    if (listaDemitidos.innerHTML === "") {
+        listaDemitidos.innerHTML = "<p>Nenhum funcionário demitido.</p>";
+    }
+}
+
+mostrarRelatorio();
