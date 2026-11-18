@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <script src="frontend/js/js_func.js" defer></script>
+    <link rel="stylesheet" href="frontend/css/style.css">
+
+
+</head>
+
+<body>
+    <header>Tela de Cadastro</header>
+    <br>
+    <br>
+    <br>
+    <main>
+        <form>
+
+            <div class="campos_cadastro">Formulário de Cadastro de Funcionário
+                <ul>
+                    <!-- - Formulário contendo os campos: *Nome*, *CPF*, *Data de Nascimento*, *Salário* e *Função*. -->
+                    <li><a>Nome do Funcionário</a></li>
+                    <input class="input" id='jscad_nomec' type="text">
+                    <li><a>CPF</a></li>
+                    <input class="input" id='jscad_cpf' type="text">
+                    <li><a>Data de Nascimento</a></li>
+                    <input class="input" id='jscad_data' type="date">
+                    <li><a>Salário</a></li>
+                    <input class="input" id='jscad_salario' type="number">
+                    <li><a>Função</a></li>
+                <input class="input" id='jscad_funcao' type="text">
+                <br>
+                <br>
+            </ul>
+            <button type="button" class="botao" onclick="salvarcad()">Salvar Funcionário</button>
+            
+        </div>
+    </form>
+    </main>
+    <footer></footer>
+
+</body>
+
+</html>

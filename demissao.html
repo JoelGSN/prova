@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desligamento de Funcionaário</title>
+        <script src="frontend/js/js_func.js" defer></script>
+    <link rel="stylesheet" href="frontend/css/style.css">
+</head>
+<body>
+    <header>Tela de Desligamento</header>
+    <br>
+    <br>
+    <br>
+    <main>
+        <form>
+
+            <div class="campos_cadastro">Formulário de Desligamento de Funcionário
+                <ul>
+                    <!-- - Formulário contendo os campos: *Nome*, *CPF*, *Data de Nascimento*, *Salário* e *Função*. -->
+                    <li><a>CPF</a></li>
+                    <input class="input" id='jsde_cpf' type="text">
+                    <br>
+                    <br>
+                    <br>
+                    <button type="button" class="botao" onclick="buscar_deslig()">Buscar Funcionário</button>
+                    <br>
+                    <br>
+                    <br>
+                    <li><a>Nome do Funcionário Para Desligamento</a></li>
+                    <input class="input" id='jsde_nomed' type="text">
+                    <br>
+                    <br>
+                    <br>
+                    <div class="validacao">
+                        <li><a>Status Novo Para o Funcionário</a></li>
+                        <input class="input" id='jsde_status' type="text" placeholder="DESLIGADO">
+                    </div>
+                    <br>
+                    <br>
+                    <button type="button" class="botao" onclick="edit_status()">Salvar Desligamento</button>
+                </ul>
+
+            </div>
+        </form>
+    </main>
+    <footer></footer>
+
+
+    
+</body>
+</html>
