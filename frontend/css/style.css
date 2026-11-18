@@ -11,7 +11,12 @@ header {
   display: none
 }
 
+nav {
+  text-align: center;
+}
+
 nav a {
+  
   color: white;
   text-decoration: none;
   margin-right: 30px;
@@ -20,6 +25,7 @@ nav a {
   padding: 10px;
   background-color: grey;
   font-weight: bold;
+
 }
 
 nav a:hover {
@@ -37,7 +43,7 @@ main {
   border: 1px solid #0a06fc;
   border-radius: 6px;
   padding: 20px;
-  width: 97vw;
+  width: 96vw;
   background-color: rgb(252, 247, 182);
 
 }
